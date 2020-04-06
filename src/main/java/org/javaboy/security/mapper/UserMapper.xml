@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javaboy.security.mapper.UserMapper">
+
+    <select id="loadUserByUsername" resultType="org.javaboy.security.bean.User">
+        SELECT * FROM user WHERE username=#{username}
+    </select>
+    <select id="getRolesById" resultType="org.javaboy.security.bean.Role">
+<!--        select * from role where id in(select rid from user_role where uid=#{id})-->
+        SELECT r.* FROM role r,user_role ur WHERE ur.`rid`=r.`id`
+        AND ur.`uid`=#{id,jdbcType=INTEGER}
+    </select>
+</mapper>
